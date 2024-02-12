@@ -16,3 +16,7 @@ def service(request):
 
 def contact(request):
     return render(request, "contact.html")
+
+
+def login_page(request):
+    return render(request, "login.html")
