@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
 from .forms import MyForm
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib import messages
 
 User = get_user_model()
@@ -24,6 +24,31 @@ def contact(request):
 
 
 def login_page(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+
+        user = authenticate(email=email, password=password)
+        if user:
+            if user.role == "customer":
+                login(request, user)
+                return HttpResponse("Customer Home")
+            elif user.role == "employee":
+                login(request, user)
+                if not request.user.is_account_verified:
+                    # Employee need to verify their account
+                    return HttpResponse(
+                        "Login Successful, You are a Employee but need to upload your documents"
+                    )
+                else:
+                    return HttpResponse(request, "Login Successful, You are a Employee")
+            elif user.role == "admin":
+                print("Invalid Email or Password")
+                messages.error(request, "Invalid Email or Password")
+                print("admin_home")
+        else:
+            messages.error(request, "Invalid Email or Password")
+            redirect("login")
     return render(request, "login.html")
 
 
@@ -69,3 +94,8 @@ def register_page(request):
             return render(request, "register.html", {"form": form})
 
     return render(request, "register.html")
+
+
+def logout_user(request):
+    logout(request)
+    return redirect("login")
