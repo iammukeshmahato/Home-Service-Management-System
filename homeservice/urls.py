@@ -1,5 +1,5 @@
-from django.urls import path
-from homeservice import views
+from django.urls import path, include
+from homeservice import guest_views as views
 
 urlpatterns = [
     path("", views.home, name="home"),
