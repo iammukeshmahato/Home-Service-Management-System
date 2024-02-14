@@ -48,12 +48,10 @@ def login_page(request):
             elif user.role == "employee":
                 login(request, user)
                 if not request.user.is_account_verified:
-                    # Employee need to verify their account
-                    return HttpResponse(
-                        "Login Successful, You are a Employee but need to upload your documents"
-                    )
+                    return redirect("employee:employee_register")
                 else:
-                    return HttpResponse(request, "Login Successful, You are a Employee")
+                    print("Login Successful, You are a Employee")
+                    return redirect("employee:employee_home")
             elif user.role == "admin":
                 print("Invalid Email or Password")
                 messages.error(request, "Invalid Email or Password")

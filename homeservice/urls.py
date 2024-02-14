@@ -16,4 +16,7 @@ urlpatterns = [
 
     # Customer
     path('customer/', include('homeservice.views.customer.urls')),
+
+    # Employee
+    path('employee/', include('homeservice.views.employee.urls')),
 ]
