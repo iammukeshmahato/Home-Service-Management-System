@@ -5,10 +5,13 @@ from django.contrib import messages
 
 User = get_user_model()
 
+from homeservice.models import Service
+
 
 # Create your views here.
 def home(request):
-    return render(request, "index.html")
+    services = Service.objects.all()
+    return render(request, "index.html", {"services": services})
 
 
 def about(request):
@@ -16,7 +19,13 @@ def about(request):
 
 
 def service(request):
-    return render(request, "services.html")
+    services = Service.objects.all()
+    return render(request, "services.html", {"services": services})
+
+
+def service_details(request, slug):
+    service = Service.objects.get(slug=slug)
+    return render(request, "service_details.html", {"service": service})
 
 
 def contact(request):

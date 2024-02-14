@@ -6,4 +6,7 @@ from . import customer_views
 urlpatterns = [
     path("", customer_views.home, name="customer_home"),
     path("home", customer_views.home, name="customer_home"),
+    path("service/", customer_views.services, name="customer_service"),
+    path("service/<slug:slug>", customer_views.service_details, name="customer_service_details"),
+    path("logout", customer_views.customer_logout, name="customer_logout"),
 ]
