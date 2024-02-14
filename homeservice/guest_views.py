@@ -6,6 +6,7 @@ from django.contrib import messages
 User = get_user_model()
 
 from homeservice.models import Service
+from homeservice.decorators import anonymous_required
 
 
 # Create your views here.
@@ -32,6 +33,7 @@ def contact(request):
     return render(request, "contact.html")
 
 
+@anonymous_required
 def login_page(request):
     if request.method == "POST":
         email = request.POST.get("email")
@@ -62,6 +64,7 @@ def login_page(request):
     return render(request, "login.html")
 
 
+@anonymous_required
 def register_page(request):
     if request.method == "POST":
 
