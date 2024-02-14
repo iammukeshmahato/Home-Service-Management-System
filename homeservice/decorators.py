@@ -1,7 +1,7 @@
 # your_app/decorators.py
 from functools import wraps
 from django.shortcuts import redirect
-
+from homeservice.models import Employee
 
 def role_required(required_role):
     def decorator(view_func):
@@ -39,10 +39,10 @@ def anonymous_required(view_func):
                     "customer:customer_home"
                 )  # Adjust 'customer:dashboard' to the desired URL for customers
             elif role == "employee":
-                return redirect(
-                    "employee:employee_home"
-                )  # Adjust 'employee:dashboard' to the desired URL for employees
-
+                if request.user.is_account_verified:
+                    return redirect("employee:employee_home")
+                else:
+                    return redirect('employee:employee_register')
             # Add more role-specific redirects as needed
 
         # If the user is anonymous, proceed with the original view
