@@ -28,7 +28,6 @@ def service(request):
 def service_details(request, slug):
     service = Service.objects.get(slug=slug)
     employees = Employee.objects.filter(job_title=service.pk)
-    print(employees)
     return render(request, "service_details.html", {"service": service, "employees": employees})
 
 
@@ -113,3 +112,9 @@ def register_page(request):
 def logout_user(request):
     logout(request)
     return redirect("login")
+
+
+def complete_profile(request):
+    service = Service.objects.all()
+    print(service)
+    return render(request, "complete_profile.html", {"service": service})
