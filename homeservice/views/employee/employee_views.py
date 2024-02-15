@@ -8,7 +8,10 @@ def register(request):
     service = Service.objects.all()
     if Employee.objects.filter(user=request.user).exists():
         employee = Employee.objects.filter(user=request.user)
-        return render(request, "employee/complete_profile.html", {"employee": employee})
+        status = "Pending"
+        if request.user.is_account_verified:
+            status = "Approved"
+        return render(request, "employee/complete_profile.html", {"employee": employee, "status": status})
         return HttpResponse("You have already submitted your documents")
 
     if request.method == "POST":

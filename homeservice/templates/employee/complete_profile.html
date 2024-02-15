@@ -80,8 +80,12 @@
       </form>
     {% else %}
       <main class="border-5 p-3 w-50 text-blue">
-        <h1 class="text-white">Status: Pending</h1>
-        <p class="fs-5">Your profile is under review. When your profile is approved, your profile will be visible to customer</p>
+        <h1 class="text-white">Status: {{ status }}</h1>
+        {% if not status == 'Approved' %}
+          <p class="fs-5">Your profile is under review. When your profile is approved, your profile will be visible to customer</p>
+        {% else %}
+          <p class="fs-5">Your profile is approved. Your profile is visible to customer</p>
+        {% endif %}
       </main>
     {% endif %}
   </div>
