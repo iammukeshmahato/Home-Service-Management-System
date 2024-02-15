@@ -1,7 +1,9 @@
 from django.shortcuts import HttpResponse, redirect, render
 from homeservice.models import Service, Employee
+from homeservice.decorators import role_required
 
 
+@role_required("employee")
 def register(request):
     service = Service.objects.all()
     if Employee.objects.filter(user=request.user).exists():
@@ -33,5 +35,6 @@ def register(request):
     return render(request, "employee/complete_profile.html", {"service": service})
 
 
+@role_required("employee")
 def home(request):
     return HttpResponse("Employee home")
