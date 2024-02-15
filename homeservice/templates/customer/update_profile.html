@@ -100,7 +100,8 @@
           </div>
         </div>
         <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
-          <form action="">
+          <form action="{% url 'customer:customer_profile' %}" method="post">
+            {% csrf_token %}
             <div class="card h-100">
               <div class="card-body">
                 <div class="row gutters">
@@ -139,19 +140,19 @@
                   <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                     <div class="form-group">
                       <label for="password">Current Password</label>
-                      <input type="password" class="form-control" id="password" placeholder="Enter Current Password" />
+                      <input type="password" class="form-control" name="current_password" id="password" placeholder="Enter Current Password" />
                     </div>
                   </div>
                   <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                     <div class="form-group">
                       <label for="1">New Password</label>
-                      <input type="password" class="form-control" id="password1" placeholder="Enter New Password" />
+                      <input type="password" class="form-control" name="new_password" id="password1" placeholder="Enter New Password" />
                     </div>
                   </div>
                   <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                     <div class="form-group">
                       <label for="password2">Confirm Password</label>
-                      <input type="password" class="form-control" id="password2" placeholder="Confirm New Password" />
+                      <input type="password" class="form-control" name="confirm_password" id="password2" placeholder="Confirm New Password" />
                       <div class="invalid-feedback" id="password-error">Passwords does not matched.</div>
                     </div>
                   </div>
@@ -159,8 +160,8 @@
                 <div class="row gutters">
                   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="text-right">
-                      <button type="button" id="submit" name="submit" class="btn btn-secondary">Cancel</button>
-                      <button type="button" id="submit" name="submit" class="btn btn-primary">Update</button>
+                      {% comment %} <button type="button" id="submit" name="submit" class="btn btn-secondary">Cancel</button> {% endcomment %}
+                      <input type="submit" id="submit" name="submit" class="btn btn-primary" />
                     </div>
                   </div>
                 </div>
