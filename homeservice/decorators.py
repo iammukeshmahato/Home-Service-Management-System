@@ -2,6 +2,7 @@
 from functools import wraps
 from django.shortcuts import redirect
 from homeservice.models import Employee
+from django.http import HttpResponseForbidden
 
 def role_required(required_role):
     def decorator(view_func):
@@ -14,9 +15,7 @@ def role_required(required_role):
 
             # Check if the user has the required role
             if request.user.role != required_role:
-                return redirect(
-                    "access_denied"
-                )  # Redirect to an access denied page or handle it accordingly
+                return HttpResponseForbidden()
 
             return view_func(request, *args, **kwargs)
 
@@ -42,7 +41,7 @@ def anonymous_required(view_func):
                 if request.user.is_account_verified:
                     return redirect("employee:employee_home")
                 else:
-                    return redirect('employee:employee_register')
+                    return redirect("employee:employee_register")
             # Add more role-specific redirects as needed
 
         # If the user is anonymous, proceed with the original view
