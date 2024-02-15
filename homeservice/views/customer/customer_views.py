@@ -26,3 +26,7 @@ def service_details(request, slug):
 def customer_logout(request):
     logout(request)
     return redirect("login")
+
+@role_required("customer")
+def appointment(request):
+    return render(request, "customer/appointment.html")
