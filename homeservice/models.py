@@ -139,7 +139,15 @@ class Appointment(models.Model):
     date = models.DateField()
     time = models.TimeField()
     problem = models.TextField()
-    status = models.CharField(max_length=20, default="Pending")
+
+    STATUS_CHOICES = [
+        ("Pending", "Pending"),
+        ("Approved", "Approved"),
+        ("Completed", "Completed"),
+        ("Rejected", "Rejected"),
+    ]
+
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="Pending")
 
     def __str__(self):
         return f"{self.customer.fullname} - {self.employee.user.fullname} - {self.service.name}"
