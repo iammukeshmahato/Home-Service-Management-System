@@ -126,3 +126,20 @@ class Service(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Appointment(models.Model):
+    customer = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="customer"
+    )
+    employee = models.ForeignKey(
+        Employee, on_delete=models.CASCADE, related_name="employee"
+    )
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    date = models.DateField()
+    time = models.TimeField()
+    problem = models.TextField()
+    status = models.CharField(max_length=20, default="Pending")
+
+    def __str__(self):
+        return f"{self.customer.fullname} - {self.employee.user.fullname} - {self.service.name}"
