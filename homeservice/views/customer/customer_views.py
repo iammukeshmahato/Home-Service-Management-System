@@ -94,3 +94,7 @@ def cancel_appointment(request, appointment_id):
     else:
         messages.error(request, "Invalid request, Cannot cancel appointment!")
         return redirect("customer:customer_appointments")
+
+
+def customer_profile(request):
+    return render(request, "customer/update_profile.html")
