@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from .forms import MyForm
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib import messages
+from homeservice.models import Employee
 
 User = get_user_model()
 
@@ -26,7 +27,9 @@ def service(request):
 
 def service_details(request, slug):
     service = Service.objects.get(slug=slug)
-    return render(request, "service_details.html", {"service": service})
+    employees = Employee.objects.filter(job_title=service.pk)
+    print(employees)
+    return render(request, "service_details.html", {"service": service, "employees": employees})
 
 
 def contact(request):
@@ -44,7 +47,7 @@ def login_page(request):
             if user.role == "customer":
                 login(request, user)
                 # return HttpResponse("Customer Home")
-                return redirect("customer_home")
+                return redirect("customer:customer_home")
             elif user.role == "employee":
                 login(request, user)
                 if not request.user.is_account_verified:

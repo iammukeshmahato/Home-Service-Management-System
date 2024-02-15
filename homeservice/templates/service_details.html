@@ -30,7 +30,29 @@
         {% comment %}service providers profile card{% endcomment %}
         <div class="about-item">
           <div class="row justify-content-center">
-            <div class="col-4 d-flex justify-content-center my-3" style="width: 18rem;">
+            {% if employees %}
+              {% for employee in employees %}
+                <div class="col-4 d-flex justify-content-center my-3" style="width: 18rem;">
+                  <div class="card align-items-center" style="width: 18rem;">
+                    <img src="{{ employee.user.profile_pic.url }}" class="card-img-top card-image employee-img" alt="{{ employee.user.fullname }}" />
+                    <div class="card-body">
+                      <h5 class="card-title">{{ employee.user.fullname }}</h5>
+                      {% comment %} <span class="service-provider-post d-block">Plumber</span> {% endcomment %}
+                      <span>Experience:</span> <b>{{ employee.experience }}</b>
+                      <p class="contact mt-2 mb-0">{{ employee.user.phone }}</p>
+                      <p class="email mt-2">{{ employee.user.email }}</p>
+                      {% comment %} <a href="mailto:{{ employee.user.phone }}" class="email mt-2">{{ employee.user.email }}</a> {% endcomment %}
+                      <a href="#" class="btn btn-primary w-100">Book</a>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            {% else %}
+              <p>No Service Providers.</p>
+            {% endif %}
+
+            {% comment %}card{% endcomment %}
+            {% comment %} <div class="col-4 d-flex justify-content-center my-3" style="width: 18rem;">
               <div class="card align-items-center" style="width: 18rem;">
                 <img src="static/img/services/human1.jpg" class="card-img-top card-image" alt="..." />
                 <div class="card-body">
@@ -42,7 +64,7 @@
                   <a href="#" class="btn btn-primary w-100">Book</a>
                 </div>
               </div>
-            </div>
+            </div> {% endcomment %}
           </div>
         </div>
       </div>
