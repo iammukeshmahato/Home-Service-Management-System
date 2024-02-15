@@ -12,6 +12,11 @@ urlpatterns = [
         customer_views.service_details,
         name="customer_service_details",
     ),
-    path("appointment", customer_views.appointment, name="customer_appointment"),
+    path("appointment/", customer_views.appointment, name="customer_appointment"),
+    path(
+        "appointment/<int:service_id>/<int:employee_id>",
+        customer_views.appointment,
+        name="customer_appointment",
+    ),
     path("logout", customer_views.customer_logout, name="customer_logout"),
 ]

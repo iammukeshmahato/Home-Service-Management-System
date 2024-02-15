@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect
-from homeservice.models import Service, Appointment
+from homeservice.models import Service, Appointment, Employee
 from django.contrib.auth import logout
 from homeservice.decorators import role_required
 
@@ -36,5 +36,21 @@ def customer_logout(request):
 
 
 @role_required("customer")
-def appointment(request):
-    return render(request, "customer/appointment.html")
+def appointment(request, service_id=None, employee_id=None):
+
+    if request.method == "POST":
+        print(request.POST)
+        employee = Employee.objects.get(id=request.POST["employee"])
+        service = Service.objects.get(id=request.POST["service"])
+        date = request.POST["date_time"].split("T")[0]
+        time = request.POST["date_time"].split("T")[1]
+        problem = request.POST["problem"]
+        appointment = Appointment(
+            customer=request.user, employee=employee, service=service, date=date, time=time, problem=problem
+        )
+        appointment.save()
+        return HttpResponse("Appointment saved successfully!")
+
+    service = Service.objects.get(id=service_id)
+    employee = Employee.objects.get(id=employee_id)
+    return render(request, "customer/appointment.html", {"service": service, "employee": employee})
