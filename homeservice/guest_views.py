@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from .forms import MyForm
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib import messages
-from homeservice.models import Employee, Inquiry
+from homeservice.models import Employee, Inquiry, Rating
 
 User = get_user_model()
 
@@ -25,7 +25,11 @@ def service(request):
     return render(request, "services.html", {"services": services})
 
 
-def service_details(request, slug):
+def service_details(request, slug, employee_id=None):
+    if employee_id:
+        employee = Employee.objects.get(id=employee_id)
+        reviews = Rating.objects.filter(employee=employee)
+        return render(request, "serviceman.html", {"employee": employee, "reviews": reviews})
     service = Service.objects.get(slug=slug)
     employees = Employee.objects.filter(job_title=service.pk)
     return render(
