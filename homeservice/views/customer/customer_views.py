@@ -59,7 +59,8 @@ def appointment(request, service_id=None, employee_id=None):
             problem=problem,
         )
         appointment.save()
-        return HttpResponse("Appointment saved successfully!")
+        messages.success(request, "Appointment booked successfully!")
+        return redirect("customer:customer_appointments")
 
     service = Service.objects.get(id=service_id)
     employee = Employee.objects.get(id=employee_id)
