@@ -26,10 +26,13 @@
         {% else %}
           <li class="nav-item dropdown" style="list-style-type: none;">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <div class="profile-pic">
-                <img src="{{ user.profile_pic.url }}" alt="Profile Picture" />
+              <div class="role d-inline">
+                <div class="profile-pic">
+                  <img src="{{ user.profile_pic.url }}" alt="Profile Picture" />
+                </div>
+                <span>{{ user.fullname }}</span>
+                <span style="position: absolute;">{{ user.role }}</span>
               </div>
-              <span>{{ user.fullname }}</span>
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
