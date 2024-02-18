@@ -61,7 +61,12 @@
                       </td>
                       {% if item.status == 'Pending' %}
                         <td>
-                          <a href="{% url 'employee:employee_appointment' item.id %}" class="btn btn-primary">Accept</a>
+                          <a href="{% url 'employee:employee_appointment' item.id  %}" class="btn btn-primary">Accept</a>
+                        </td>
+                      {% endif %}
+                      {% if item.status == 'Approved' %}
+                        <td>
+                          <a href="{% url 'employee:employee_appointment_completed' item.id %}" class="btn btn-primary">Completed</a>
                         </td>
                       {% endif %}
                     </tr>
