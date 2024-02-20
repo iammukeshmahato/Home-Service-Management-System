@@ -8,13 +8,6 @@
   <link rel="stylesheet" href="{% static 'css/table.css' %}" />
 {% endblock %}
 {% block main_content %}
-  <div class="notification" style="z-index: 9999;
-  position: fixed;
-  width: calc(100% - 2rem);
-  top: 5rem;
-  left: 1rem;
-  right: 1rem;"></div>
-
   <section class="about_section layout_padding-bottom">
     <div class="container">
       <h2 style="text-align: center" class="my-5">Employee Home Page</h2>
@@ -103,24 +96,4 @@
       </div>
     </div>
   </section>
-{% endblock %}
-
-{% block script %}
-  <script>
-    var employeeId = document.getElementById('employeeID').value
-    const socket = new WebSocket(`ws://${window.location.host}/ws/employee/${employeeId}/`)
-    socket.onmessage = function (event) {
-      const data = JSON.parse(event.data)
-      console.log(data.message)
-      notification_div = document.querySelector('.notification')
-      if (data.type === 'notification.message') {
-        notification_div.appendChild(document.createElement('div')).innerHTML = `
-                                                                                              <div class="alert alert-info" role="alert" id=notification_msg >${data.message}</div>
-                                                                                            `
-        setTimeout(() => {
-          notification_div.innerHTML = ''
-        }, 5000)
-      }
-    }
-  </script>
 {% endblock %}
