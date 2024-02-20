@@ -31,7 +31,7 @@ def services(request):
 @role_required("customer")
 def service_details(request, slug):
     service = Service.objects.get(slug=slug)
-    employees = Employee.objects.filter(job_title=service.pk)
+    employees = Employee.objects.filter(job_title=service.pk, is_verified=True)
     return render(
         request,
         "customer/service_details.html",
