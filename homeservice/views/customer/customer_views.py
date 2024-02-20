@@ -5,6 +5,10 @@ from homeservice.decorators import role_required
 from django.contrib import messages
 from django.http import HttpResponseNotAllowed
 
+# for channels to send notification to employee
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+
 
 @role_required("customer")
 def home(request):
@@ -60,6 +64,17 @@ def appointment(request, service_id=None, employee_id=None):
             problem=problem,
         )
         appointment.save()
+
+        channel_layer = get_channel_layer()
+
+        async_to_sync(channel_layer.group_send)(
+            f"employee_{employee.user.pk}",
+            {
+                "type": "notification.message",
+                "message": f"New appointment booked by customer {request.user.fullname}!",
+            },
+        )
+
         messages.success(request, "Appointment booked successfully!")
         return redirect("customer:customer_appointments")
 
