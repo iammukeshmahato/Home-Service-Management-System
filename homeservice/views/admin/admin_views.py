@@ -8,6 +8,7 @@ User = get_user_model()
 
 from homeservice.models import Employee, Service
 from django.contrib import messages
+from django.db.models import Q
 
 
 def home(request):
@@ -79,5 +80,19 @@ def employee(request):
 
 # view employee
 def employee_list(request):
+    if request.method == "POST":
+        search_text = request.POST.get("search")
+        employees = Employee.objects.filter(
+            Q(user__fullname__istartswith=search_text)
+            | Q(user__email__istartswith=search_text)
+            | Q(user__phone__istartswith=search_text)
+            | Q(user__address__istartswith=search_text)
+        )
+        return render(
+            request,
+            "admin/employee.html",
+            {"employees": employees, "search_text": search_text},
+        )
+
     employees = Employee.objects.all()
     return render(request, "admin/employee.html", {"employees": employees})
