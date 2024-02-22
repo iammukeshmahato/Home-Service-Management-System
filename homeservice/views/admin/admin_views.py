@@ -42,7 +42,7 @@ def employee(request):
                 phone=phone,
                 profile_pic=request.FILES["profile_pic"],
                 role="employee",
-                is_account_verified=True,
+                # is_account_verified=True,
             )
             user.set_password(password)
             print("user created successfully")
@@ -58,6 +58,9 @@ def employee(request):
                 is_verified=True,
                 is_doc_uploaded=True,
             )
+            if employee:
+                user.is_account_verified = True
+                user.save()
             print("employee created successfully")
             messages.success(request, "Employee added successfully")
             return redirect("admin_dashboard:employee_create")
