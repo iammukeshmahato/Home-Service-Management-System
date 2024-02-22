@@ -14,6 +14,7 @@ def home(request):
     return render(request, "admin/dashboard.html")
 
 
+# create employee
 def employee(request):
     if request.method == "POST":
         fullname = request.POST.get("fullname")
@@ -74,3 +75,9 @@ def employee(request):
 
     services = Service.objects.all()
     return render(request, "admin/employee_create.html", {"services": services})
+
+
+# view employee
+def employee_list(request):
+    employees = Employee.objects.all()
+    return render(request, "admin/employee.html", {"employees": employees})
