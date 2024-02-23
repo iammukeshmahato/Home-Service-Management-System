@@ -181,6 +181,24 @@ def employee_delete(request, employee_id):
 
 # view customer
 def customer_list(request):
+    if request.method == "POST":
+        search_text = request.POST.get("search")
+        customers = User.objects.filter(
+            Q(role="customer")
+            & (
+                Q(fullname__istartswith=search_text)
+                | Q(email__istartswith=search_text)
+                | Q(phone__istartswith=search_text)
+                | Q(address__istartswith=search_text)
+                | Q(email__iexact=search_text)
+            )
+        )
+        return render(
+            request,
+            "admin/customer.html",
+            {"customers": customers, "search_text": search_text},
+        )
+
     customers = User.objects.filter(role="customer")
     return render(request, "admin/customer.html", {"customers": customers})
 
