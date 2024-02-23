@@ -33,4 +33,9 @@ urlpatterns = [
     path("service/create", views.service, name="service_create"),
     path("service/<int:service_id>", views.service_delete, name="service_delete"),
     path("service/<int:service_id>/edit", views.service_edit, name="service_edit"),
+
+    # inquiries
+    path("inquiry", views.inquiry_list, name="inquiry"),
+    path("inquiry/read", views.inquiry_read, name="inquiry_read"),
+    path("inquiry/<int:id>/read", views.inquiry_read, name="inquiry_read"),
 ]

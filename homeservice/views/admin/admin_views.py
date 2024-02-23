@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-from homeservice.models import Employee, Service
+from homeservice.models import Employee, Service, Inquiry
 from django.contrib import messages
 from django.db.models import Q
 
@@ -266,3 +266,23 @@ def service_edit(request, service_id):
         return redirect("admin_dashboard:service")
 
     return render(request, "admin/service_create.html", {"service": service})
+
+
+# view inquiries
+def inquiry_list(request):
+    inquirys = Inquiry.objects.filter(is_read=False)
+    return render(request, "admin/inquiry.html", {"inquirys": inquirys})
+
+
+# read inquiry
+def inquiry_read(request, id=None):
+    if id:
+        inquiry = Inquiry.objects.get(id=id)
+        inquiry.is_read = True
+        inquiry.save()
+        messages.success(request, "Inquiry read successfully")
+        return redirect("admin_dashboard:inquiry")
+
+    inquirys = Inquiry.objects.filter(is_read=True)
+    message_type = "read"
+    return render(request, "admin/inquiry.html", {"inquirys": inquirys, "message_type": message_type})

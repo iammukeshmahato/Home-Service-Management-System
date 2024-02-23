@@ -73,10 +73,10 @@
       </a>
       <ul id="messages-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
         <li>
-          <a href=""><i class="bi bi-circle"></i><span>Unread Message</span></a>
+          <a href="{% url 'admin_dashboard:inquiry' %}"><i class="bi bi-circle"></i><span>Unread Message</span></a>
         </li>
         <li>
-          <a href=""><i class="bi bi-circle"></i><span>Read Message</span></a>
+          <a href="{% url 'admin_dashboard:inquiry_read' %}"><i class="bi bi-circle"></i><span>Read Message</span></a>
         </li>
       </ul>
     </li>

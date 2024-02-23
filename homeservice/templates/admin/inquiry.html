@@ -1,0 +1,116 @@
+{% extends 'admin/layouts/main.html' %}
+{% load static %}
+
+{% block links %}
+  <title>Inquiries</title>
+  <style>
+    .form-section-container {
+      max-width: calc(100% - 1rem);
+      margin-left: 0.5rem;
+    }
+    
+    .info-title {
+      background-color: #20c997;
+    }
+    
+    .main-content {
+      font-size: 14px;
+    }
+    
+    .table_option-menu {
+      transform: rotate(90deg);
+      cursor: pointer;
+      height: 35px;
+      vertical-align: middle;
+    }
+    
+    .no_bg {
+      background-color: transparent;
+    }
+    
+    .no_outline {
+      outline: none;
+      border: none;
+    }
+    
+    .table_action_options {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      top: 0;
+      right: 90px;
+      width: 125px;
+      z-index: 1;
+    }
+    
+    .table_option-menu.visible ~ .table_action_options {
+      display: block;
+    }
+    
+    button img {
+      width: 24px;
+      height: 20px;
+    }
+  </style>
+{% endblock %}
+
+{% block main_content %}
+  {% include 'components/message.html' %}
+
+  <main id="main" class="main">
+    <div class="main-content" style="border:  0px solid red; font-size: 14px">
+      <div class="border rounded mt-4">
+        <h4 class="p-3 text-white bg-secondary rounded-top text-center mb-3">
+          {% if message_type and message_type == 'read' %}
+            Resolved Inquiries
+          {% else %}
+            Inquiries
+          {% endif %}
+        </h4>
+        <table id="studentList" class="col-4 table table-striped mb-0" style="width:100%; font-size:14px">
+          <thead style="background-color:rgb(0, 135, 253);" class="text-white">
+            <tr>
+              <th>S.N.</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Message</th>
+              {% if not message_type == 'read' %}
+                <th>Action</th>
+              {% endif %}
+            </tr>
+          </thead>
+
+          {% if inquirys %}
+            <tbody>
+              {% for inquiry in inquirys %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ inquiry.name }}</td>
+                  <td>{{ inquiry.email }}</td>
+                  <td>{{ inquiry.phone }}</td>
+                  <td>{{ inquiry.message }}</td>
+                  {% if not message_type == 'read' %}
+                    <td>
+                      <a href="{% url 'admin_dashboard:inquiry_read' id=inquiry.pk %}" class="btn btn-primary">Mark as read</a>
+                    </td>
+                  {% endif %}
+                </tr>
+              {% endfor %}
+            </tbody>
+          {% else %}
+            <tbody>
+              <tr>
+                <td colspan="10">No Record Found.</td>
+              </tr>
+            </tbody>
+          {% endif %}
+        </table>
+      </div>
+    </div>
+  </main>
+{% endblock %}
+
+{% block script %}
+  <script src="{% static 'admin/js/ActionMenusHandler.js' %}"></script>
+{% endblock %}
