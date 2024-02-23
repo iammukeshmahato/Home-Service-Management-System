@@ -212,5 +212,18 @@ def customer_delete(request, customer_id):
 
 # view services
 def service_list(request):
+    if request.method == "POST":
+        search_text = request.POST.get("search")
+        services = Service.objects.filter(
+            Q(name__istartswith=search_text)
+            | Q(description__icontains=search_text)
+            | Q(name__iexact=search_text)
+        )
+        return render(
+            request,
+            "admin/service.html",
+            {"services": services, "search_text": search_text},
+        )
+
     services = Service.objects.all()
     return render(request, "admin/service.html", {"services": services})
