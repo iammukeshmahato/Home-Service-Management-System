@@ -38,4 +38,10 @@ urlpatterns = [
     path("inquiry", views.inquiry_list, name="inquiry"),
     path("inquiry/read", views.inquiry_read, name="inquiry_read"),
     path("inquiry/<int:id>/read", views.inquiry_read, name="inquiry_read"),
+
+    # FAQs
+    path("faq", views.faq_list, name="faq"),
+    path("faq/create", views.faq, name="faq_create"),
+    path("faq/<int:faq_id>", views.faq_delete, name="faq_delete"),
+    path("faq/<int:faq_id>/edit", views.faq_edit, name="faq_edit"),
 ]

@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-from homeservice.models import Employee, Service, Inquiry
+from homeservice.models import Employee, Service, Inquiry, FAQ as Faq
 from django.contrib import messages
 from django.db.models import Q
 
@@ -285,4 +285,47 @@ def inquiry_read(request, id=None):
 
     inquirys = Inquiry.objects.filter(is_read=True)
     message_type = "read"
-    return render(request, "admin/inquiry.html", {"inquirys": inquirys, "message_type": message_type})
+    return render(
+        request,
+        "admin/inquiry.html",
+        {"inquirys": inquirys, "message_type": message_type},
+    )
+
+
+# FAQs
+def faq(request):
+    if request.method == "POST":
+        question = request.POST.get("question")
+        answer = request.POST.get("answer")
+        faq = Faq.objects.create(question=question, answer=answer)
+        messages.success(request, "FAQ created successfully")
+        return HttpResponse("FAQ created successfully")
+
+    return render(request, "admin/faq_create.html")
+
+
+# view faqs
+def faq_list(request):
+    faqs = Faq.objects.all()
+    return render(request, "admin/faq.html", {"faqs": faqs})
+
+
+# edit faq
+def faq_edit(request, faq_id):
+    faq = Faq.objects.get(id=faq_id)
+    if request.method == "POST":
+        faq.question = request.POST.get("question")
+        faq.answer = request.POST.get("answer")
+        faq.save()
+        messages.success(request, "FAQ updated successfully")
+        return redirect("admin_dashboard:faq")
+
+    return render(request, "admin/faq_create.html", {"faq": faq})
+
+
+# delete faq
+def faq_delete(request, faq_id):
+    faq = Faq.objects.get(id=faq_id)
+    faq.delete()
+    messages.success(request, "FAQ deleted successfully")
+    return redirect("admin_dashboard:faq")

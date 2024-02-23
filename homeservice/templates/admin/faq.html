@@ -1,0 +1,122 @@
+{% extends 'admin/layouts/main.html' %}
+{% load static %}
+
+{% block links %}
+  <title>FAQs</title>
+  <style>
+    .form-section-container {
+      max-width: calc(100% - 1rem);
+      margin-left: 0.5rem;
+    }
+    
+    .info-title {
+      background-color: #20c997;
+    }
+    
+    .main-content {
+      font-size: 14px;
+    }
+    
+    .table_option-menu {
+      transform: rotate(90deg);
+      cursor: pointer;
+      height: 35px;
+      vertical-align: middle;
+    }
+    
+    .no_bg {
+      background-color: transparent;
+    }
+    
+    .no_outline {
+      outline: none;
+      border: none;
+    }
+    
+    .table_action_options {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      top: 0;
+      right: 90px;
+      width: 125px;
+      z-index: 1;
+    }
+    
+    .table_option-menu.visible ~ .table_action_options {
+      display: block;
+    }
+    
+    button img {
+      width: 24px;
+      height: 20px;
+    }
+  </style>
+{% endblock %}
+
+{% block main_content %}
+  {% include 'components/message.html' %}
+
+  <main id="main" class="main">
+    <div class="main-content" style="border:  0px solid red; font-size: 14px">
+          <h4 class="p-3 text-white bg-secondary rounded-top text-center mb-0">FAQs</h4>
+
+
+      <div class="border rounded mt-4">
+        <table id="studentList" class="col-4 table table-striped mb-0" style="width:100%; font-size:14px">
+          <thead style="background-color:rgb(0, 135, 253);" class="text-white">
+            <tr>
+              <th>S.N.</th>
+              <th>Question</th>
+              <th>Answer</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          {% if faqs %}
+            <tbody>
+              {% for faq in faqs %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ faq.question }}</td>
+                  <td>{{ faq.answer }}</td>
+
+                  <td style="position: relative">
+                    <button class="no_bg no_outline table_option-menu"><img src="{% static 'admin/img/ic_options.svg' %}" alt="options menu" /></button>
+
+                    <div class="table_action_options shadow p-3 rounded flex direction-col">
+                      <button name="edit" class="no_bg no_outline my-2" onclick="window.location.href='{% url 'admin_dashboard:faq_edit' faq_id=faq.pk %}'">
+                        <div class="d-flex justify-content-start align-items-center">
+                          <img src="{% static 'admin/img/ic_edit.svg' %}" alt="edit icon" />
+                          <p class="mb-0 ms-2">Edit</p>
+                        </div>
+                      </button>
+
+                      <button name="edit" class="no_bg no_outline my-2" onclick="if(confirm('Are you sure want to delete {{ customer.fullname }} ?')){window.location.href='{% url 'admin_dashboard:faq_delete' faq_id=faq.pk %}'}">
+                        <div class="d-flex justify-content-start align-items-center">
+                          <img src="{% static 'admin/img/ic_delete.svg' %}" alt="edit icon" style="width: 24px;
+                            height: 20px;" />
+                          <p class="mb-0 ms-2">Delete</p>
+                        </div>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          {% else %}
+            <tbody>
+              <tr>
+                <td colspan="10">No Record Found.</td>
+              </tr>
+            </tbody>
+          {% endif %}
+        </table>
+      </div>
+    </div>
+  </main>
+{% endblock %}
+
+{% block script %}
+  <script src="{% static 'admin/js/ActionMenusHandler.js' %}"></script>
+{% endblock %}
