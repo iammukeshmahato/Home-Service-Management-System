@@ -91,10 +91,10 @@
       </a>
       <ul id="site_news" class="nav-content collapse" data-bs-parent="#sidebar-nav">
         <li>
-          <a href=""><i class="bi bi-circle"></i><span>Add FAQs</span></a>
+          <a href="{% url "admin_dashboard:faq_create" %}"><i class="bi bi-circle"></i><span>Add FAQs</span></a>
         </li>
         <li>
-          <a href=""><i class="bi bi-circle"></i><span>View FAQs</span></a>
+          <a href="{% url "admin_dashboard:faq" %}"><i class="bi bi-circle"></i><span>View FAQs</span></a>
         </li>
       </ul>
     </li>
@@ -109,7 +109,7 @@
     </li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="">
+      <a class="nav-link collapsed" href="{% url "logout" %}">
         <i class="bi bi-box-arrow-in-right"></i>
         <span>Sign Out</span>
       </a>

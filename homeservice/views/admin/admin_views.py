@@ -9,13 +9,16 @@ User = get_user_model()
 from homeservice.models import Employee, Service, Inquiry, FAQ as Faq
 from django.contrib import messages
 from django.db.models import Q
+from homeservice.decorators import role_required
 
 
+@role_required("admin")
 def home(request):
     return render(request, "admin/dashboard.html")
 
 
 # create employee
+@role_required("admin")
 def employee(request):
     if request.method == "POST":
         fullname = request.POST.get("fullname")
@@ -79,6 +82,7 @@ def employee(request):
 
 
 # view employee
+@role_required("admin")
 def employee_list(request):
     if request.method == "POST":
         search_text = request.POST.get("search")
@@ -104,6 +108,7 @@ def employee_list(request):
 
 
 # employee application
+@role_required("admin")
 def employee_application(request, employee_id=None):
     if employee_id:
         employee = Employee.objects.get(id=employee_id)
@@ -119,6 +124,7 @@ def employee_application(request, employee_id=None):
 
 
 # view employee application
+# @role_required('admin')
 # def employee_application(request, employee_id):
 #     employee = Employee.objects.get(id=employee_id)
 #     return HttpResponse(employee.user.fullname)
@@ -126,6 +132,7 @@ def employee_application(request, employee_id=None):
 
 
 # employee verification
+@role_required("admin")
 def employee_verification(request, employee_id):
     employee = Employee.objects.get(id=employee_id)
     if request.method == "POST":
@@ -138,6 +145,7 @@ def employee_verification(request, employee_id):
 
 
 # employee edit
+@role_required("admin")
 def employee_edit(request, employee_id):
     employee = Employee.objects.get(id=employee_id)
     if request.method == "POST":
@@ -171,6 +179,7 @@ def employee_edit(request, employee_id):
 
 
 # employee delete
+@role_required("admin")
 def employee_delete(request, employee_id):
     employee = Employee.objects.get(id=employee_id)
     employee.user.delete()
@@ -180,6 +189,7 @@ def employee_delete(request, employee_id):
 
 
 # view customer
+@role_required("admin")
 def customer_list(request):
     if request.method == "POST":
         search_text = request.POST.get("search")
@@ -203,6 +213,7 @@ def customer_list(request):
     return render(request, "admin/customer.html", {"customers": customers})
 
 
+@role_required("admin")
 def customer_delete(request, customer_id):
     customer = User.objects.get(id=customer_id)
     customer.delete()
@@ -211,6 +222,7 @@ def customer_delete(request, customer_id):
 
 
 # view services
+@role_required("admin")
 def service_list(request):
     if request.method == "POST":
         search_text = request.POST.get("search")
@@ -230,6 +242,7 @@ def service_list(request):
 
 
 # delete service
+@role_required("admin")
 def service_delete(request, service_id):
     service = Service.objects.get(id=service_id)
     service.delete()
@@ -238,6 +251,7 @@ def service_delete(request, service_id):
 
 
 # create service
+@role_required("admin")
 def service(request):
     if request.method == "POST":
         name = request.POST.get("name")
@@ -254,6 +268,7 @@ def service(request):
 
 
 # edit service
+@role_required("admin")
 def service_edit(request, service_id):
     service = Service.objects.get(id=service_id)
     if request.method == "POST":
@@ -269,12 +284,14 @@ def service_edit(request, service_id):
 
 
 # view inquiries
+@role_required("admin")
 def inquiry_list(request):
     inquirys = Inquiry.objects.filter(is_read=False)
     return render(request, "admin/inquiry.html", {"inquirys": inquirys})
 
 
 # read inquiry
+@role_required("admin")
 def inquiry_read(request, id=None):
     if id:
         inquiry = Inquiry.objects.get(id=id)
@@ -293,6 +310,7 @@ def inquiry_read(request, id=None):
 
 
 # FAQs
+@role_required("admin")
 def faq(request):
     if request.method == "POST":
         question = request.POST.get("question")
@@ -305,12 +323,14 @@ def faq(request):
 
 
 # view faqs
+@role_required("admin")
 def faq_list(request):
     faqs = Faq.objects.all()
     return render(request, "admin/faq.html", {"faqs": faqs})
 
 
 # edit faq
+@role_required("admin")
 def faq_edit(request, faq_id):
     faq = Faq.objects.get(id=faq_id)
     if request.method == "POST":
@@ -324,6 +344,7 @@ def faq_edit(request, faq_id):
 
 
 # delete faq
+@role_required("admin")
 def faq_delete(request, faq_id):
     faq = Faq.objects.get(id=faq_id)
     faq.delete()

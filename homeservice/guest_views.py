@@ -102,9 +102,8 @@ def login_page(request):
                     print("Login Successful, You are a Employee")
                     return redirect("employee:employee_home")
             elif user.role == "admin":
-                print("Invalid Email or Password")
-                messages.error(request, "Invalid Email or Password")
-                print("admin_home")
+                login(request, user)
+                return redirect("admin_dashboard:admin_home")
         else:
             messages.error(request, "Invalid Email or Password")
             redirect("login")
