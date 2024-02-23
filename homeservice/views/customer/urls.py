@@ -19,6 +19,7 @@ urlpatterns = [
         name="customer_appointment",
     ),
     path("rating", customer_views.rating, name="rating"),
+    path("rating/<int:id>/delete", customer_views.rating_delete, name="rating_delete"),
     path("myappointment", customer_views.myappointment, name="customer_appointments"),
     path("appointment/<int:appointment_id>", customer_views.cancel_appointment, name="cancel_appointment"),
     path("profile", customer_views.customer_profile, name="customer_profile"),

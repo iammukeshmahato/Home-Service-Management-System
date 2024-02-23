@@ -47,6 +47,7 @@ def service_details(request, slug, employee_id=None):
                 rate = "aaaaa"
 
             review = {
+                "pk": review.pk,
                 "rate": rate,
                 "review": review.review,
                 "customer": review.customer,

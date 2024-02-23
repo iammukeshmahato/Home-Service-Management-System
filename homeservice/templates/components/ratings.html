@@ -34,8 +34,7 @@
                     {% if review.customer == request.user %}
                       <div class="notice_action">
                         <div class="notice_action_btns">
-                          <a class="btn btn-primary w-100" href="">Edit</a>
-                          <a class="btn btn-danger w-100" href="" onclick="return confirm('Are you sure want to delete ?')">Delete</a>
+                          <a class="btn btn-danger w-100" href="/customer/rating/{{review.pk}}/delete" onclick="return confirm('Are you sure want to delete ?')">Delete</a>
                         </div>
                       </div>
                     {% endif %}

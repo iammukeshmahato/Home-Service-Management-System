@@ -169,3 +169,14 @@ def rating(request):
             )
         return redirect(request.META.get("HTTP_REFERER", "/"))
     return HttpResponseNotAllowed("Method Not Allowed!")
+
+
+@role_required("customer")
+def rating_delete(request, id):
+    rating = Rating.objects.filter(id=id, customer=request.user)
+    if rating.exists():
+        rating.delete()
+        messages.success(request, "Rating deleted successfully!")
+    else:
+        messages.error(request, "Invalid request, Cannot delete rating!")
+    return redirect(request.META.get("HTTP_REFERER", "/"))
