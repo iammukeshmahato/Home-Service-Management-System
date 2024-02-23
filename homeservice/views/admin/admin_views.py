@@ -251,3 +251,18 @@ def service(request):
         return redirect("admin_dashboard:service")
 
     return render(request, "admin/service_create.html")
+
+
+# edit service
+def service_edit(request, service_id):
+    service = Service.objects.get(id=service_id)
+    if request.method == "POST":
+        service.name = request.POST.get("name")
+        service.description = request.POST.get("description")
+        if request.FILES.get("image"):
+            service.image = request.FILES["image"]
+        service.save()
+        messages.success(request, "Service updated successfully")
+        return redirect("admin_dashboard:service")
+
+    return render(request, "admin/service_create.html", {"service": service})
