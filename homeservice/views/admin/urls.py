@@ -26,4 +26,5 @@ urlpatterns = [
 
     # customers
     path("customer", views.customer_list, name="customer"),
+    path("customer/<int:customer_id>", views.customer_delete, name="customer_delete"),
 ]
