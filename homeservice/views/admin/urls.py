@@ -22,4 +22,8 @@ urlpatterns = [
         views.employee_verification,
         name="employee_verification",
     ),
+
+
+    # customers
+    path("customer", views.customer_list, name="customer"),
 ]

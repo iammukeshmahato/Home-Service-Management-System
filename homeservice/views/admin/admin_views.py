@@ -177,3 +177,9 @@ def employee_delete(request, employee_id):
     employee.delete()
     messages.success(request, "Employee deleted successfully")
     return redirect("admin_dashboard:employee")
+
+
+# view customer
+def customer_list(request):
+    customers = User.objects.filter(role="customer")
+    return render(request, "admin/customer.html", {"customers": customers})
