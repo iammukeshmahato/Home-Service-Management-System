@@ -228,9 +228,26 @@ def service_list(request):
     services = Service.objects.all()
     return render(request, "admin/service.html", {"services": services})
 
+
 # delete service
 def service_delete(request, service_id):
     service = Service.objects.get(id=service_id)
     service.delete()
     messages.success(request, "Service deleted successfully")
     return redirect("admin_dashboard:service")
+
+
+# create service
+def service(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        description = request.POST.get("description")
+        image = request.FILES["image"]
+
+        service = Service.objects.create(
+            name=name, description=description, image=image
+        )
+        messages.success(request, "Service added successfully")
+        return redirect("admin_dashboard:service")
+
+    return render(request, "admin/service_create.html")
