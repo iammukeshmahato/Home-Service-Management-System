@@ -168,3 +168,12 @@ def employee_edit(request, employee_id):
         {"employee": employee, "services": services},
     )
     return HttpResponse("Employee edit page")
+
+
+# employee delete
+def employee_delete(request, employee_id):
+    employee = Employee.objects.get(id=employee_id)
+    employee.user.delete()
+    employee.delete()
+    messages.success(request, "Employee deleted successfully")
+    return redirect("admin_dashboard:employee")
