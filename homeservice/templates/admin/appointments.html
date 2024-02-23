@@ -1,0 +1,186 @@
+{% extends 'admin/layouts/main.html' %}
+{% load static %}
+
+{% block links %}
+  <title>Appointments</title>
+  <style>
+    .form-section-container {
+      max-width: calc(100% - 1rem);
+      margin-left: 0.5rem;
+    }
+    
+    .info-title {
+      background-color: #20c997;
+    }
+    
+    .main-content {
+      font-size: 14px;
+    }
+    
+    .table_option-menu {
+      transform: rotate(90deg);
+      cursor: pointer;
+      height: 35px;
+      vertical-align: middle;
+    }
+    
+    .no_bg {
+      background-color: transparent;
+    }
+    
+    .no_outline {
+      outline: none;
+      border: none;
+    }
+    
+    .table_action_options {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      top: 0;
+      right: 90px;
+      width: 125px;
+      z-index: 1;
+    }
+    
+    .table_option-menu.visible ~ .table_action_options {
+      display: block;
+    }
+    
+    button img {
+      width: 24px;
+      height: 20px;
+    }
+    
+    .table tbody td.status span {
+      position: relative;
+      border-radius: 30px;
+      padding: 4px 10px 4px 25px;
+    }
+    .table tbody td.status span:after {
+      position: absolute;
+      top: 9px;
+      left: 10px;
+      width: 10px;
+      height: 10px;
+      content: '';
+      border-radius: 50%;
+    }
+    
+    .table tbody td.status .active {
+      background: #cff6dd;
+      color: #1fa750;
+    }
+    
+    .table tbody td.status .active:after {
+      background: #23bd5a;
+    }
+    
+    .table tbody td.status .waiting {
+      background: #fdf5dd;
+      color: #cfa00c;
+    }
+    
+    .table tbody td.status .waiting:after {
+      background: #f2be1d;
+    }
+    .table tbody td.status .completed {
+      background: #dddefd;
+      color: #130ccf;
+    }
+    
+    .table tbody td.status .completed:after {
+      background: #1d21f2;
+    }
+    .table tbody td.status .rejected {
+      background: #f4b3b3;
+      color: #cf0c0c;
+    }
+    
+    .table tbody td.status .rejected:after {
+      background: #f21d1d;
+    }
+  </style>
+{% endblock %}
+
+{% block main_content %}
+  {% include 'components/message.html' %}
+
+  <main id="main" class="main">
+    <div class="main-content" style="border:  0px solid red; font-size: 14px">
+      <h4 class="p-3 text-white bg-secondary rounded-top text-center mb-0">Appointments</h4>
+
+      <div class="border rounded mt-4">
+        <table id="studentList" class="col-4 table table-striped mb-0" style="width:100%; font-size:14px">
+          <thead style="background-color:rgb(0, 135, 253);" class="text-white">
+            <tr>
+              <th>S.N.</th>
+              <th>Service</th>
+              <th>Employee</th>
+              <th>Customer</th>
+              <th>Problem</th>
+              <th>Status</th>
+              <th>Date &amp; Time</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          {% if appointments %}
+            <tbody>
+              {% for appointment in appointments %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ appointment.employee.job_title }}</td>
+                  <td>{{ appointment.employee }}</td>
+                  <td>{{ appointment.customer }}</td>
+                  <td>{{ appointment.problem }}</td>
+                  <td class="status">
+                    <span class="
+                    {% if appointment.status == 'Pending' %}
+                        {{ 'waiting' }}
+                      {% elif appointment.status == 'Approved' %}
+                        {{ 'active' }}
+                      {% elif appointment.status == 'Completed' %}
+                        {{ 'completed' }}
+                      {% elif appointment.status == 'Rejected' %}
+                        {{ 'rejected' }}
+                      {% endif %}
+                    ">
+                      {{ appointment.status }}
+                    </span>
+                  </td>
+                  <td>{{ appointment.date }} {{ appointment.time }}</td>
+
+                  <td style="position: relative">
+                    {% if appointment.status == 'Pending' %}
+                      <button class="no_bg no_outline table_option-menu"><img src="{% static 'admin/img/ic_options.svg' %}" alt="options menu" /></button>
+
+                      <div class="table_action_options shadow p-3 rounded flex direction-col">
+                        <button name="edit" class="no_bg no_outline my-2" onclick="window.location.href='{% url 'admin_dashboard:appointment' id=appointment.pk %}'">
+                          <div class="d-flex justify-content-start align-items-center">
+                            <img src="{% static 'admin/img/ic_edit.svg' %}" alt="edit icon" />
+                            <p class="mb-0 ms-2">Accept</p>
+                          </div>
+                        </button>
+                      </div>
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          {% else %}
+            <tbody>
+              <tr>
+                <td colspan="10">No Record Found.</td>
+              </tr>
+            </tbody>
+          {% endif %}
+        </table>
+      </div>
+    </div>
+  </main>
+{% endblock %}
+
+{% block script %}
+  <script src="{% static 'admin/js/ActionMenusHandler.js' %}"></script>
+{% endblock %}

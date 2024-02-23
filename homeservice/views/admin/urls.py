@@ -44,4 +44,8 @@ urlpatterns = [
     path("faq/create", views.faq, name="faq_create"),
     path("faq/<int:faq_id>", views.faq_delete, name="faq_delete"),
     path("faq/<int:faq_id>/edit", views.faq_edit, name="faq_edit"),
+
+    # appointments
+    path("appointment", views.appointment_list, name="appointment"),
+    path("appointment/<int:id>", views.appointment_list, name="appointment"),
 ]

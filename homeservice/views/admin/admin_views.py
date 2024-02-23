@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-from homeservice.models import Employee, Service, Inquiry, FAQ as Faq
+from homeservice.models import Employee, Service, Inquiry, FAQ as Faq, Appointment
 from django.contrib import messages
 from django.db.models import Q
 from homeservice.decorators import role_required
@@ -350,3 +350,18 @@ def faq_delete(request, faq_id):
     faq.delete()
     messages.success(request, "FAQ deleted successfully")
     return redirect("admin_dashboard:faq")
+
+
+# view appointments
+@role_required("admin")
+def appointment_list(request, id=None):
+    if id:
+        appointment = Appointment.objects.get(id=id)
+        appointment.status = "Approved"
+        appointment.save()
+        messages.success(request, "Appointment Approved Successfully")
+        return redirect("admin_dashboard:appointment")
+
+    # appointments = Appointment.objects.all()
+    appointments = Appointment.objects.order_by("-date")
+    return render(request, "admin/appointments.html", {"appointments": appointments})
