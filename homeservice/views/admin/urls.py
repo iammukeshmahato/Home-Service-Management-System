@@ -30,4 +30,5 @@ urlpatterns = [
 
     # services
     path("service", views.service_list, name="service"),
+    path("service/<int:service_id>", views.service_delete, name="service_delete"),
 ]

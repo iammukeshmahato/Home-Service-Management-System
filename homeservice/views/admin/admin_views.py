@@ -227,3 +227,10 @@ def service_list(request):
 
     services = Service.objects.all()
     return render(request, "admin/service.html", {"services": services})
+
+# delete service
+def service_delete(request, service_id):
+    service = Service.objects.get(id=service_id)
+    service.delete()
+    messages.success(request, "Service deleted successfully")
+    return redirect("admin_dashboard:service")

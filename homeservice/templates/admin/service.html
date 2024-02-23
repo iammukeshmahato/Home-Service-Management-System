@@ -104,6 +104,15 @@
 
                   <td style="position: relative">
                     <button class="no_bg no_outline table_option-menu"><img src="{% static 'admin/img/ic_options.svg' %}" alt="options menu" /></button>
+                    <div class="table_action_options shadow p-3 rounded flex direction-col">
+                      <button name="edit" class="no_bg no_outline my-2" onclick="if(confirm('Are you sure want to delete {{ customer.fullname }} ?')){window.location.href='{% url 'admin_dashboard:service_delete' service_id=service.pk %}'}">
+                        <div class="d-flex justify-content-start align-items-center">
+                          <img src="{% static 'admin/img/ic_delete.svg' %}" alt="edit icon" style="width: 24px;
+                            height: 20px;" />
+                          <p class="mb-0 ms-2">Delete</p>
+                        </div>
+                      </button>
+                    </div>
                   </td>
                 </tr>
               {% endfor %}
