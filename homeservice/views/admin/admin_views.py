@@ -208,3 +208,9 @@ def customer_delete(request, customer_id):
     customer.delete()
     messages.success(request, "Customer deleted successfully")
     return redirect("admin_dashboard:customer")
+
+
+# view services
+def service_list(request):
+    services = Service.objects.all()
+    return render(request, "admin/service.html", {"services": services})
