@@ -82,11 +82,16 @@ def employee(request):
 def employee_list(request):
     if request.method == "POST":
         search_text = request.POST.get("search")
+        print("search_text=", search_text)
         employees = Employee.objects.filter(
-            Q(user__fullname__istartswith=search_text)
-            | Q(user__email__istartswith=search_text)
-            | Q(user__phone__istartswith=search_text)
-            | Q(user__address__istartswith=search_text)
+            Q(is_verified=True)
+            & (
+                Q(user__fullname__istartswith=search_text)
+                | Q(user__email__istartswith=search_text)
+                | Q(user__phone__istartswith=search_text)
+                | Q(user__address__istartswith=search_text)
+                | Q(user__email__iexact=search_text)
+            )
         )
         return render(
             request,
@@ -94,5 +99,39 @@ def employee_list(request):
             {"employees": employees, "search_text": search_text},
         )
 
-    employees = Employee.objects.all()
+    employees = Employee.objects.filter(is_verified=True)
     return render(request, "admin/employee.html", {"employees": employees})
+
+
+# employee application
+def employee_application(request, employee_id=None):
+    if employee_id:
+        employee = Employee.objects.get(id=employee_id)
+        # return HttpResponse(employee.user.fullname)
+        return render(
+            request, "admin/employee_verification.html", {"employee": employee}
+        )
+
+    employees = Employee.objects.filter(is_verified=False)
+    return render(
+        request, "admin/employee_applications_list.html", {"employees": employees}
+    )
+
+
+# view employee application
+# def employee_application(request, employee_id):
+#     employee = Employee.objects.get(id=employee_id)
+#     return HttpResponse(employee.user.fullname)
+#     # return render(request, "admin/employee_application.html", {"employee": employee})
+
+
+# employee verification
+def employee_verification(request, employee_id):
+    employee = Employee.objects.get(id=employee_id)
+    if request.method == "POST":
+        employee.is_verified = True
+        employee.save()
+        employee.user.is_account_verified = True
+        employee.user.save()
+        messages.success(request, "Employee verified successfully")
+        return redirect("admin_dashboard:employee_application")
