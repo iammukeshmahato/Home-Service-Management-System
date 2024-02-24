@@ -23,6 +23,8 @@ def about(request):
 
 def service(request):
     services = Service.objects.all()
+    if request.method == "GET" and request.GET.get("search"):
+        services = Service.objects.filter(name__icontains=request.GET.get("search"))
     return render(request, "services.html", {"services": services})
 
 
