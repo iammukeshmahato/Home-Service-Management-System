@@ -1,0 +1,52 @@
+{% extends 'components/layout.html' %}
+{% block page_title %}
+  Career Page
+{% endblock %}
+
+{% block main_content %}
+  <div class="mt-5"></div>
+  {% include 'components/message.html' %}
+  <section class="contact-section layout_padding-bottom">
+    <div class="container">
+      <h2 style="text-align: center" class="mb-5">Career Page</h2>
+      <div class="row">
+        <div class="col-lg-6 col-md-6 d-flex justify-content-centre align-items-center">
+          <div class="img-box">
+            <img src="static/img/contact.jpeg" alt="" />
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 d-flex justify-content-centre align-items-center">
+          <div class="detail-box">
+            <div class="form">
+              <div>
+                <div class="contact-form-wrapper d-flex justify-content-center">
+                  <form action="{% url 'career' %}" class="contact-form" method="post">
+                    {% csrf_token %}
+                    <p class="description">Elevate your career with us; send us your CV</p>
+                    <div>
+                      <input type="text" class="form-control border-white mb-3 form-input" name="name" placeholder="Name" required />
+                    </div>
+                    <div>
+                      <input type="text" class="form-control border-white mb-3 form-input" name="phone" placeholder="Phone" required />
+                    </div>
+                    <div>
+                      <input type="email" class="form-control border-white mb-3 form-input" name="email" placeholder="Email" required />
+                    </div>
+                    <div>
+                      <input type="file" class="form-control" name="cv" accept=".pdf" />
+                    </div>
+                    <div class="submit-button-wrapper d-flex justify-content-end">
+                      <input type="submit" value="Send" class="submit-btn" />
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="blank mt-5 pt-5"></div>
+    </div>
+  </section>
+{% endblock %}

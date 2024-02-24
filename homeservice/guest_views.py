@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from .forms import MyForm
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib import messages
-from homeservice.models import Employee, Inquiry, Rating, FAQ
+from homeservice.models import Employee, Inquiry, Rating, FAQ, Career
 
 User = get_user_model()
 
@@ -81,6 +81,21 @@ def contact(request):
         )
         return redirect("contact")
     return render(request, "contact.html")
+
+
+def career(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        phone = request.POST.get("phone")
+        cv = request.FILES.get("cv")
+        career = Career(name=name, email=email, phone=phone, cv=cv)
+        messages.success(
+            request,
+            "Your inquery form has been submitted successfully. We will contact you soon.",
+        )
+        return redirect("career")
+    return render(request, "career.html")
 
 
 @anonymous_required

@@ -12,6 +12,7 @@ urlpatterns = [
         views.service_details,
         name="service_details",
     ),
+    path("career", views.career, name="career"),
     path("contact", views.contact, name="contact"),
     # Authentication
     path("login", views.login_page, name="login"),

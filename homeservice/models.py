@@ -183,3 +183,13 @@ class FAQ(models.Model):
 
     def __str__(self):
         return self.question
+
+
+class Career(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=15)
+    cv = models.FileField(upload_to="career_cv/")
+
+    def __str__(self):
+        return self.title
