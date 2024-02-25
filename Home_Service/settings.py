@@ -161,3 +161,14 @@ CHANNEL_LAYERS = {
         "BACKEND": "channels.layers.InMemoryChannelLayer",
     },
 }
+
+
+# email setup
+# for gmail
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = '<your@email.com>'        # replace with your own email
+EMAIL_HOST_PASSWORD = '<your password>'     # replace with your own password
+DEFAULT_FROM_EMAIL = '<your@email.com>'
