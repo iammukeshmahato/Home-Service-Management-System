@@ -6,6 +6,7 @@ from django.contrib.auth.models import (
 )
 
 from django.utils.text import slugify
+from ckeditor.fields import RichTextField
 
 # from tinymce.models import HTMLField
 
@@ -190,6 +191,20 @@ class Career(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=15)
     cv = models.FileField(upload_to="career_cv/")
+
+    def __str__(self):
+        return self.title
+
+
+class Blog(models.Model):
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True)
+    content = RichTextField()
+    created_at = models.DateField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title

@@ -48,4 +48,7 @@ urlpatterns = [
     # appointments
     path("appointment", views.appointment_list, name="appointment"),
     path("appointment/<int:id>", views.appointment_list, name="appointment"),
+
+    #blogs
+    path("blog/create", views.blog_create, name="blog_create"),
 ]

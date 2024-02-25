@@ -6,13 +6,14 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-from homeservice.models import Employee, Service, Inquiry, FAQ as Faq, Appointment
+from homeservice.models import Employee, Service, Inquiry, FAQ as Faq, Appointment, Blog
 from django.contrib import messages
 from django.db.models import Q
 from homeservice.decorators import role_required
 from django.core.mail import send_mail
 from django.utils import timezone
 from datetime import timedelta
+from .blog_form import BlogPostForm
 
 @role_required("admin")
 def home(request):
@@ -404,3 +405,17 @@ def appointment_list(request, id=None):
     # appointments = Appointment.objects.all()
     appointments = Appointment.objects.order_by("-date")
     return render(request, "admin/appointments.html", {"appointments": appointments})
+
+
+# create blog post
+@role_required("admin")
+def blog_create(request):
+    if request.method == "POST":
+        title = request.POST.get("title")
+        content = request.POST.get("content")
+        blog = Blog.objects.create(title=title, content=content)
+        messages.success(request, "Blog created successfully")
+        return redirect("admin_dashboard:blog_create")
+
+    form = BlogPostForm()
+    return render(request, "admin/blog_create.html", {"form": form})
