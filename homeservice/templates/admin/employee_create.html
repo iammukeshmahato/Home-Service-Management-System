@@ -179,11 +179,11 @@
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-6 mt-3">
                   <label for="previous_work" class="form-label">Previous Work <span>*</span></label>
-                  <textarea type="text" class="form-control" id="previous_work" name="previous_work" rows="3" placeholder="Descrive your previous work" requiredd>{% if employee %}{{employee.previous_work}} {% else %} {{ form.data.previous_work }} {% endif %}</textarea>
+                  <textarea type="text" class="form-control" id="previous_work" name="previous_work" rows="3" placeholder="Descrive your previous work" requiredd>{% if employee %}{{employee.previous_work}}{% else %}{{ form.data.previous_work }}{% endif %}</textarea>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-6 mt-3">
                   <label for="previous_experience" class="form-label">Experience <span>*</span></label>
-                  <textarea type="text" class="form-control" id="previous_experience" name="previous_experience" rows="3" placeholder="Write your previous experience" requiredd>{% if employee %}{{employee.previous_experience}} {% else %} {{ form.data.previous_experience }} {% endif %}</textarea>
+                  <textarea type="text" class="form-control" id="previous_experience" name="previous_experience" rows="3" placeholder="Write your previous experience" requiredd>{% if employee %}{{employee.previous_experience}}{% else %}{{ form.data.previous_experience }}{% endif %}</textarea>
                 </div>
               </div>
 
