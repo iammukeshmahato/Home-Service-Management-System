@@ -10,11 +10,31 @@ from homeservice.models import Employee, Service, Inquiry, FAQ as Faq, Appointme
 from django.contrib import messages
 from django.db.models import Q
 from homeservice.decorators import role_required
-
+from django.core.mail import send_mail
+from django.utils import timezone
+from datetime import timedelta
 
 @role_required("admin")
 def home(request):
-    return render(request, "admin/dashboard.html")
+    customer_count = User.objects.filter(role="customer").count()
+    employee_count = Employee.objects.filter(is_verified=True).count()
+    service_count = Service.objects.all().count()
+    appointment_last_7_days = Appointment.objects.filter(
+        date__gte=Appointment.objects.last().date - timedelta(days=7)
+    ).count()
+    unread_inquiry = Inquiry.objects.filter(is_read=False).count()
+    employee_application = Employee.objects.filter(is_verified=False).count()
+
+    data = {
+        "customer_count": customer_count,
+        "employee_count": employee_count,
+        "service_count": service_count,
+        "appointment_last_7_days": appointment_last_7_days,
+        "unread_inquiry": unread_inquiry,
+        "employee_application": employee_application,
+    }
+
+    return render(request, "admin/dashboard.html", data)
 
 
 # create employee
@@ -39,7 +59,26 @@ def employee(request):
         form = MyForm(request.POST, request.FILES)
 
         if form.is_valid():
+            try:
+                # send password to email
+                subject = "Login Credentials"
+                message = "email: " + email + "\npassword: " + password
+                from_email = "iammukeshmahato123@gmail.com"
+                recipient_list = [email]
+                send_mail(subject, message, from_email, recipient_list)
 
+            except Exception as e:
+                print(f"An error occurred: {str(e)}")
+                print(f"Sorry, employee for the given email {email} can't be created.")
+
+                # print("Sorry employee for given {email} can't be created")
+                messages.error(
+                    request,
+                    f"Sorry, employee for the given email {email} can't be created.",
+                )
+                # return redirect("admin_dashboard:employee_create")
+
+            # if mail sent successfully then create user
             user = User.objects.create_user(
                 email=email,
                 fullname=fullname,
@@ -66,8 +105,8 @@ def employee(request):
             if employee:
                 user.is_account_verified = True
                 user.save()
-            print("employee created successfully")
-            messages.success(request, "Employee added successfully")
+                print("employee created successfully")
+                messages.success(request, "Employee added successfully")
             return redirect("admin_dashboard:employee_create")
         else:
             services = Service.objects.all()
