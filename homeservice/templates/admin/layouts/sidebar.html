@@ -91,17 +91,33 @@
     {% comment %}manage site section{% endcomment %}
     <li class="nav-heading">Manage Sites</li>
     <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#site_news" data-bs-toggle="collapse" href="">
+      <a class="nav-link collapsed" data-bs-target="#FAQs" data-bs-toggle="collapse" href="">
         <i class="bi bi-person"></i>
         <span>FAQs</span>
         <i class="bi bi-chevron-down ms-auto"></i>
       </a>
-      <ul id="site_news" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+      <ul id="FAQs" class="nav-content collapse" data-bs-parent="#sidebar-nav">
         <li>
           <a href="{% url 'admin_dashboard:faq_create' %}"><i class="bi bi-circle"></i><span>Add FAQs</span></a>
         </li>
         <li>
           <a href="{% url 'admin_dashboard:faq' %}"><i class="bi bi-circle"></i><span>View FAQs</span></a>
+        </li>
+      </ul>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#blogs" data-bs-toggle="collapse" href="">
+        <i class="bi bi-person"></i>
+        <span>Blogs</span>
+        <i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="blogs" class="nav-content collapse" data-bs-parent="#-nav">
+        <li>
+          <a href="{% url 'admin_dashboard:blog_create' %}"><i class="bi bi-circle"></i><spasidebarn>Add Blog</spasidebarn></a>
+        </li>
+        <li>
+          <a href="{% url 'blog' %}"><i class="bi bi-circle"></i><span>View Blog</span></a>
         </li>
       </ul>
     </li>
