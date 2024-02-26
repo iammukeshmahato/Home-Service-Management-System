@@ -7,6 +7,8 @@ from django.contrib.auth.models import (
 
 from django.utils.text import slugify
 from ckeditor.fields import RichTextField
+from django.utils import timezone
+from django.template.defaultfilters import timesince, timeuntil
 
 # from tinymce.models import HTMLField
 
@@ -200,11 +202,35 @@ class Blog(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
     content = RichTextField()
-    created_at = models.DateField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+
+    def time_since_creation(self):
+        delta = timezone.now() - self.created_at
+        days = delta.days
+        hours, remainder = divmod(delta.seconds, 3600)
+        minutes, _ = divmod(remainder, 60)
+
+        if days == 1:
+            return "1 day ago"
+        elif days > 1 and days < 7:
+            return f"{days} days ago"
+        elif days >= 7 and days < 30:
+            return f"{days // 7} weeks ago"
+        elif days >= 30 and days < 365:
+            months = days // 30
+            remaining_days = days % 30
+            if remaining_days == 0:
+                return f"{months} months ago"
+            return f"{months} months, {remaining_days} days ago"
+        else:
+            return timesince(self.created_at, timezone.now()) + " ago"
+
+    def time_until_creation(self):
+        return timeuntil(self.created_at, timezone.now()) + " from now"
 
     def __str__(self):
         return self.title
