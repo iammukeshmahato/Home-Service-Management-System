@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from .forms import MyForm
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib import messages
-from homeservice.models import Employee, Inquiry, Rating, FAQ, Career
+from homeservice.models import Employee, Inquiry, Rating, FAQ, Career, Blog
 
 User = get_user_model()
 
@@ -182,3 +182,12 @@ def complete_profile(request):
     service = Service.objects.all()
     print(service)
     return render(request, "complete_profile.html", {"service": service})
+
+
+def blog(request):
+    posts = Blog.objects.all()
+    return render(request, "blog_list.html", {"posts": posts})
+
+def blog_post(request, slug):
+    post = Blog.objects.get(slug=slug)
+    return render(request, "post.html", {"post": post})

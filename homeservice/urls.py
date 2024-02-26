@@ -25,4 +25,8 @@ urlpatterns = [
     path("complete", views.complete_profile),
     # Admin
     path("admin/", include("homeservice.views.admin.urls")),
+
+    #blog
+    path("blog", views.blog, name="blog"),
+    path("blog/<slug:slug>", views.blog_post, name="blog_post"),
 ]

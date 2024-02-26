@@ -1,0 +1,31 @@
+{% extends 'components/layout.html' %}
+{% block page_title %}
+  Blogs
+{% endblock %}
+
+{% block main_content %}
+  <div class="mt-5"></div>
+  {% include 'components/message.html' %}
+  <section class="layout_padding-bottom">
+    <div class="container">
+      <h2 style="text-align: center" class="mb-5">Blogs</h2>
+
+      <div class="row">
+        <div class="list-group">
+          {% if posts %}
+            {% for item in posts %}
+              <a href="/blog/{{ item.slug }}" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">List group item heading</h5>
+                  <small>3 days ago</small>
+                </div>
+              </a>
+            {% endfor %}
+          {% else %}
+            <p>No posts found</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

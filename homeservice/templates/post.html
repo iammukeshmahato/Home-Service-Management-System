@@ -1,0 +1,15 @@
+{% extends 'components/layout.html' %}
+{% block page_title %}
+  {{ post.title }}
+{% endblock %}
+
+{% block main_content %}
+  <div class="mt-5"></div>
+  {% include 'components/message.html' %}
+  <section class="layout_padding-bottom">
+    <div class="container">
+      <h2 style="text-align: center" class="mb-5">{{ post.title }}</h2>
+      <div class="row">{{ post.content|safe }}</div>
+    </div>̉
+  </section>
+{% endblock %}

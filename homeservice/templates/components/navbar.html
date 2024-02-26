@@ -27,14 +27,17 @@
             <a class="nav-link" href="/contact">Contact</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url "home" %}#faq_section">FAQ</a>
+            <a class="nav-link" href="{% url 'home' %}#faq_section">FAQ</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/career">Career</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/blog">Blog</a>
+          </li>
         </ul>
 
-        <form class="d-flex me-3" role="search" action="{% url "service" %}">
+        <form class="d-flex me-3" role="search" action="{% url 'service' %}">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" />
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
