@@ -89,16 +89,16 @@
     <div class="main-content">
       <div class="row col-12">
         <div class="card red col-md-2 col-sm-4" style="width: 14rem; height: 10rem;">
-          <a href="">
+          <a href="{% url 'admin_dashboard:customer' %}">
             <div class="card-body">
               <img class="ms-5" src="{% static 'admin/img/students.png' %}" height="50px" width="50px" alt="" />
               <h5 class="card-title ms-3">Total Customer</h5>
-              <h5 class="count">{{customer_count}}</h5>
+              <h5 class="count">{{ customer_count }}</h5>
             </div>
           </a>
         </div>
         <div class="card cyan col-md-2 col-sm-4" style="width: 14rem; height: 10rem;">
-          <a href="">
+          <a href="{% url 'admin_dashboard:employee' %}">
             <div class="card-body">
               <img class="ms-5" src="{% static 'admin/img/instructor.png' %}" height="50px" width="50px" alt="" />
 
@@ -108,17 +108,17 @@
           </a>
         </div>
         <div class="card orange col-md-2 col-sm-4" style="width: 14rem; height: 10rem;">
-          <a href="">
+          <a href="{% url 'admin_dashboard:service' %}">
             <div class="card-body">
-              <a class="mb-0" href="" src="{% static 'admin/img/education.png' %}" height="50px" width="50px" alt="">
-                <h5 class="card-title ms-3">Total Service</h5>
-                <h5 class="count">{{ service_count }}</h5>
-              </a>
+              <img class="ms-5" src="{% static 'admin/img/education.png' %}" height="50px" width="50px" alt="" />
+
+              <h5 class="card-title ms-3">Total Service</h5>
+              <h5 class="count">{{ service_count }}</h5>
             </div>
           </a>
         </div>
         <div class="card blue col-md-2 col-sm-4" style="width: 14rem; height: 10rem;">
-          <a href="">
+          <a href="{% url 'admin_dashboard:appointment' %}">
             <div class="card-body mb-5">
               <img class="ms-5" src="{% static 'admin/img/instructor.png' %}" height="50px" width="50px" alt="" />
               <p class="card-title ms-3">Appointment</p>
@@ -127,7 +127,7 @@
           </a>
         </div>
         <div class="card varyDarkBlue col-md-2 col-sm-4" style="width: 14rem; height: 10rem;">
-          <a href="">
+          <a href="{% url 'admin_dashboard:inquiry' %}">
             <div class="card-body mb-5">
               <img class="ms-5" src="{% static 'admin/img/students.png' %}" height="50px" width="50px" alt="" />
               <p class="card-title ms-3">New inquiry</p>
@@ -136,7 +136,7 @@
           </a>
         </div>
         <div class="card varyDarkBlue col-md-2 col-sm-4" style="width: 14rem; height: 10rem;">
-          <a href="">
+          <a href="{% url 'admin_dashboard:employee_application' %}">
             <div class="card-body mb-5">
               <img class="ms-5" src="{% static 'admin/img/students.png' %}" height="50px" width="50px" alt="" />
               <p class="card-title ms-3" style="white-space:nowrap;">New Application</p>
