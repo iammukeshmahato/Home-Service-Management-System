@@ -195,7 +195,7 @@ class Career(models.Model):
     cv = models.FileField(upload_to="career_cv/")
 
     def __str__(self):
-        return self.title
+        return self.name
 
 
 class Blog(models.Model):

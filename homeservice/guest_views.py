@@ -92,9 +92,10 @@ def career(request):
         phone = request.POST.get("phone")
         cv = request.FILES.get("cv")
         career = Career(name=name, email=email, phone=phone, cv=cv)
+        career.save()
         messages.success(
             request,
-            "Your inquery form has been submitted successfully. We will contact you soon.",
+            "Your CV has been submitted successfully. We will contact you soon.",
         )
         return redirect("career")
     return render(request, "career.html")
