@@ -20,7 +20,7 @@
             <div class="form">
               <div>
                 <div class="contact-form-wrapper d-flex justify-content-center">
-                  <form action="{% url 'career' %}" class="contact-form" method="post">
+                  <form action="{% url 'career' %}" class="contact-form" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <p class="description">Elevate your career with us; send us your CV</p>
                     <div>

@@ -51,4 +51,7 @@ urlpatterns = [
 
     #blogs
     path("blog/create", views.blog_create, name="blog_create"),
+
+    # applicants: forms submitted from career page
+    path("applicant", views.applicant_list, name="applicant"),
 ]

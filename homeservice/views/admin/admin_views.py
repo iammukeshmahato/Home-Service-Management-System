@@ -6,7 +6,15 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-from homeservice.models import Employee, Service, Inquiry, FAQ as Faq, Appointment, Blog
+from homeservice.models import (
+    Employee,
+    Service,
+    Inquiry,
+    FAQ as Faq,
+    Appointment,
+    Blog,
+    Career,
+)
 from django.contrib import messages
 from django.db.models import Q
 from homeservice.decorators import role_required
@@ -14,6 +22,7 @@ from django.core.mail import send_mail
 from django.utils import timezone
 from datetime import timedelta
 from .blog_form import BlogPostForm
+
 
 @role_required("admin")
 def home(request):
@@ -419,3 +428,10 @@ def blog_create(request):
 
     form = BlogPostForm()
     return render(request, "admin/blog_create.html", {"form": form})
+
+
+# view applicants
+@role_required("admin")
+def applicant_list(request):
+    applicants = Career.objects.all()
+    return render(request, "admin/applicants.html", {"applicants": applicants})
