@@ -1,0 +1,105 @@
+{% extends 'admin/layouts/main.html' %}
+{% load static %}
+
+{% block links %}
+  <title>Applicants</title>
+  <style>
+    .form-section-container {
+      max-width: calc(100% - 1rem);
+      margin-left: 0.5rem;
+    }
+    
+    .info-title {
+      background-color: #20c997;
+    }
+    
+    .main-content {
+      font-size: 14px;
+    }
+    
+    .table_option-menu {
+      transform: rotate(90deg);
+      cursor: pointer;
+      height: 35px;
+      vertical-align: middle;
+    }
+    
+    .no_bg {
+      background-color: transparent;
+    }
+    
+    .no_outline {
+      outline: none;
+      border: none;
+    }
+    
+    .table_action_options {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      top: 0;
+      right: 90px;
+      width: 125px;
+      z-index: 1;
+    }
+    
+    .table_option-menu.visible ~ .table_action_options {
+      display: block;
+    }
+    
+    button img {
+      width: 24px;
+      height: 20px;
+    }
+  </style>
+{% endblock %}
+
+{% block main_content %}
+  {% include 'components/message.html' %}
+
+  <main id="main" class="main">
+    <div class="main-content" style="border:  0px solid red; font-size: 14px">
+      <h4 class="p-3 text-white bg-secondary rounded-top text-center mb-0">Applicants</h4>
+
+      <div class="border rounded mt-4">
+        <table id="studentList" class="col-4 table table-striped mb-0" style="width:100%; font-size:14px">
+          <thead style="background-color:rgb(0, 135, 253);" class="text-white">
+            <tr>
+              <th>S.N.</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>CV</th>
+            </tr>
+          </thead>
+
+          {% if applicants %}
+            <tbody>
+              {% for applicant in applicants %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ applicant.name }}</td>
+                  <td>{{ applicant.email }}</td>
+                  <td>{{ applicant.phone }}</td>
+                  <td>
+                    <a href="{{ applicant.cv.url }}" target="_blank">file</a>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          {% else %}
+            <tbody>
+              <tr>
+                <td colspan="10">No Record Found.</td>
+              </tr>
+            </tbody>
+          {% endif %}
+        </table>
+      </div>
+    </div>
+  </main>
+{% endblock %}
+
+{% block script %}
+  <script src="{% static 'admin/js/ActionMenusHandler.js' %}"></script>
+{% endblock %}
