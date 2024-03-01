@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "homeservice",
-    'ckeditor'
+    "ckeditor",
 ]
 
 MIDDLEWARE = [
@@ -80,10 +80,31 @@ ASGI_APPLICATION = "Home_Service.asgi.application"  # self added for channels
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# Default
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+
+
+# for mysql
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "Home_Service",
+        "USER": "root",
+        "PASSWORD": "",
+        "HOST": "localhost",
+        "PORT": "3306",
+        "OPTIONS": {
+            "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
+            # for xampp
+            # "unix_socket": "/Applications/XAMPP/xamppfiles/var/mysql/mysql.sock",  # Update this path to your mysql.sock file
+            # for mysql installed using brew or in terminal
+            "unix_socket": "/tmp/mysql.sock",  # Update this path to your mysql.sock file
+        },
     }
 }
 
@@ -166,10 +187,10 @@ CHANNEL_LAYERS = {
 
 # email setup
 # for gmail
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = '<your@email.com>'        # replace with your own email
-EMAIL_HOST_PASSWORD = '<your password>'     # replace with your own password
-DEFAULT_FROM_EMAIL = '<your@email.com>'
+EMAIL_HOST_USER = "<your@email.com>"  # replace with your own email
+EMAIL_HOST_PASSWORD = "<your password>"  # replace with your own password
+DEFAULT_FROM_EMAIL = "<your@email.com>"
