@@ -160,3 +160,13 @@ def profile(request):
 
     employee = Employee.objects.get(user=request.user)
     return render(request, "employee/profile.html", {"employee": employee})
+
+
+@role_required("employee")
+def update_profile_pic(request):
+    if request.method == "POST":
+        request.user.profile_pic = request.FILES["new_pp"]
+        request.user.save()
+        messages.success(request, "Profile picture updated successfully!")
+        return redirect("employee:employee_profile")
+    return redirect("employee:employee_profile")

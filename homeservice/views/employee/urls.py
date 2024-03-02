@@ -17,7 +17,7 @@ urlpatterns = [
         employee_views.appointment_completed,
         name="employee_appointment_completed",
     ),
-
     path("reviews/", employee_views.reviews, name="employee_reviews"),
     path("profile", employee_views.profile, name="employee_profile"),
+    path("profile_pic", employee_views.update_profile_pic, name="employee_profile_pic"),
 ]
