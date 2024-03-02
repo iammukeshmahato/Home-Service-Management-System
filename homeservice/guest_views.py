@@ -186,8 +186,9 @@ def complete_profile(request):
 
 
 def blog(request):
-    posts = Blog.objects.all()
+    posts = Blog.objects.order_by("-created_at")
     return render(request, "blog_list.html", {"posts": posts})
+
 
 def blog_post(request, slug):
     post = Blog.objects.get(slug=slug)
