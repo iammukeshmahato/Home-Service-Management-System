@@ -29,7 +29,7 @@ def register(request):
 
         employee = Employee(
             user=request.user,
-            job_title=job_title,
+            job_title=Service.objects.get(pk=job_title),
             experience=experience,
             bio=bio,
             id_type=id_type,

@@ -29,9 +29,12 @@ def home(request):
     customer_count = User.objects.filter(role="customer").count()
     employee_count = Employee.objects.filter(is_verified=True).count()
     service_count = Service.objects.all().count()
-    appointment_last_7_days = Appointment.objects.filter(
-        date__gte=Appointment.objects.last().date - timedelta(days=7)
-    ).count()
+    if Appointment.objects.all().count() > 0:
+        appointment_last_7_days = Appointment.objects.filter(
+            date__gte=Appointment.objects.last().date - timedelta(days=7)
+        ).count()
+    else:
+        appointment_last_7_days = 0
     unread_inquiry = Inquiry.objects.filter(is_read=False).count()
     employee_application = Employee.objects.filter(is_verified=False).count()
 

@@ -57,7 +57,11 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
-                <a class="dropdown-item" href="{% url 'customer:customer_profile' %}"><i class="bi bi-person"></i> My Profile</a>
+                {% if request.user.role == 'employee' %}
+                  <a class="dropdown-item" href="{% url 'employee:employee_profile' %}"><i class="bi bi-person"></i> My Profile</a>
+                {% else %}
+                  <a class="dropdown-item" href="{% url 'customer:customer_profile' %}"><i class="bi bi-person"></i> My Profile</a>
+                {% endif %}
               </li>
               <li>
                 <hr class="dropdown-divider" />
