@@ -23,5 +23,6 @@ urlpatterns = [
     path("myappointment", customer_views.myappointment, name="customer_appointments"),
     path("appointment/<int:appointment_id>", customer_views.cancel_appointment, name="cancel_appointment"),
     path("profile", customer_views.customer_profile, name="customer_profile"),
+    path("profile_pic", customer_views.update_profile_pic, name="customer_profile_pic"),
     path("logout", customer_views.customer_logout, name="customer_logout"),
 ]

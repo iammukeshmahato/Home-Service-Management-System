@@ -136,6 +136,15 @@ def customer_profile(request):
 
 
 @role_required("customer")
+def update_profile_pic(request):
+    if request.method == "POST":
+        request.user.profile_pic = request.FILES["new_pp"]
+        request.user.save()
+        messages.success(request, "Profile Picture updated successfully!")
+        return redirect("customer:customer_home")
+
+
+@role_required("customer")
 def rating(request):
     if request.method == "POST":
         rating = request.POST["rating"]
