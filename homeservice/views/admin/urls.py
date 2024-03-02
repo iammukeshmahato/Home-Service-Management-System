@@ -54,4 +54,8 @@ urlpatterns = [
 
     # applicants: forms submitted from career page
     path("applicant", views.applicant_list, name="applicant"),
+
+    #update profile
+    path("profile", views.update_password, name="profile"),
+    path("profile_pic", views.update_profile_pic, name="profile_pic"),
 ]

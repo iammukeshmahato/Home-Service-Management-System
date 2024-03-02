@@ -438,3 +438,35 @@ def blog_create(request):
 def applicant_list(request):
     applicants = Career.objects.all()
     return render(request, "admin/applicants.html", {"applicants": applicants})
+
+
+# update profile
+@role_required("admin")
+def update_password(request):
+    if request.method == "POST":
+        current_password = request.POST["current_password"]
+        new_password = request.POST["new_password"]
+        confirm_password = request.POST["confirm_password"]
+        if not request.user.check_password(current_password):
+            messages.error(request, "Invalid current password!")
+            print("Invalid current password!")
+        else:
+            if new_password != confirm_password:
+                print("Passwords do not match!")
+                messages.error(request, "Passwords do not match!")
+            else:
+                request.user.set_password(new_password)
+                request.user.save()
+                messages.success(request, "Password updated successfully!")
+                print("Password updated successfully!")
+        return redirect("admin_dashboard:profile")
+    return render(request, "admin/update_profile.html")
+
+
+@role_required("admin")
+def update_profile_pic(request):
+    if request.method == "POST":
+        request.user.profile_pic = request.FILES["new_pp"]
+        request.user.save()
+        messages.success(request, "Profile Picture updated successfully!")
+        return redirect("admin_dashboard:profile")

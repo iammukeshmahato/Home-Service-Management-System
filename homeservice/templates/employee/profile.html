@@ -195,7 +195,7 @@
       if (choosedFile) {
         const reader = new FileReader() //FileReader is a predefined function of JS
         reader.addEventListener('load', function () {
-          img.setAttribute('src', reader.result) // [1] because we have 2 images with id avtar,
+          img.setAttribute('src', reader.result)
           img.style.border = '2px solid red'
           submit_btn.style = 'display: inline;'
         })
