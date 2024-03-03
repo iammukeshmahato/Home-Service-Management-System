@@ -3,6 +3,7 @@ import secrets
 import string
 from .employee_form import MyForm
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 
 User = get_user_model()
 
@@ -430,7 +431,34 @@ def blog_create(request):
         return redirect("admin_dashboard:blog_create")
 
     form = BlogPostForm()
-    return render(request, "admin/blog_create.html", {"form": form})
+    title = "Create Blog Post"
+    url = reverse("admin_dashboard:blog_create")
+    return render(
+        request, "admin/blog_create.html", {"form": form, "title": title, "url": url}
+    )
+
+
+@role_required("admin")
+def blog_update(request, id):
+    if request.method == "POST":
+        title = request.POST.get("title")
+        content = request.POST.get("content")
+        blog = Blog.objects.get(id=id)
+        blog.title = title
+        blog.content = content
+        blog.save()
+        messages.success(request, "Blog Updated successfully")
+        return redirect("admin_dashboard:blog_create")
+
+    blog = Blog.objects.get(id=id)
+    form = BlogPostForm(instance=blog)
+    title = "Update Blog Post"
+    url = reverse("admin_dashboard:blog_update", args=[blog.id])
+    return render(
+        request,
+        "admin/blog_create.html",
+        {"form": form, "blog": blog, "title": title, "url": url},
+    )
 
 
 # view applicants
