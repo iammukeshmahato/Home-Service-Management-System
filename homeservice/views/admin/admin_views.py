@@ -370,7 +370,7 @@ def faq(request):
         answer = request.POST.get("answer")
         faq = Faq.objects.create(question=question, answer=answer)
         messages.success(request, "FAQ created successfully")
-        return HttpResponse("FAQ created successfully")
+        return redirect("admin_dashboard:faq")
 
     return render(request, "admin/faq_create.html")
 
